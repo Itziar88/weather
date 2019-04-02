@@ -8,6 +8,9 @@
             :cities="cities"
         />
         <!-- <Pruebas /> -->
+        <button @click="media">
+            media
+        </button>
     </div>
 </template>
 
@@ -51,6 +54,14 @@ export default {
                 state: city.consolidated_weather[0].weather_state_name,
                 stateAbbr: city.consolidated_weather[0].weather_state_abbr,
             }
+        },
+        media () {
+            let averageTemp
+            this.cities.forEach((city) => {
+                averageTemp = city.temp
+                console.log(averageTemp)
+            })
+            console.log('ok')
         },
     },
 }
