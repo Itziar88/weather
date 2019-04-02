@@ -2,7 +2,7 @@
     <div id="app">
         <Header
             :title="title"
-            @searchingCities="cities = search()"
+            @onSearch="handleSearch"
         />
         <CitiesList
             :cities="cities"
@@ -29,12 +29,13 @@ export default {
         return {
             title: 'API MetaWeather',
             cities: [],
+            inputValue: 'lon',
         }
     },
     methods: {
-        async search () {
+        async handleSearch (value) {
             try {
-                const response = await axios.get('/location/search/?query=san')
+                const response = await axios.get(`/location/search/?query=${value}`)
                 const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
                 const responseCities = await Promise.all(getCitiesData)
                 this.cities = responseCities.map(responseCity => this.transformCity(responseCity.data))

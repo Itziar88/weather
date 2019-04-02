@@ -2,7 +2,7 @@
     <div class="hello">
         <h1>API MetaWeather</h1>
         <input type="text">
-        <button @click="search">
+        <button @click="search('lon')">
             Buscar
         </button>
         <ul>
@@ -27,9 +27,10 @@ export default {
         }
     },
     methods: {
-        async search () {
+        async search (value) {
+            console.log(value)
             try {
-                const response = await axios.get('/location/search/?query=san')
+                const response = await axios.get(`/location/search/?query=${value}`)
                 const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
                 const responseCities = await Promise.all(getCitiesData)
                 this.cities = responseCities.map(responseCity => this.transformCity(responseCity.data))

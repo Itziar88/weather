@@ -1,7 +1,11 @@
 <template>
     <div class="hello">
         <h1>{{ title }}</h1>
-        <input type="text">
+        <input
+            v-model="inputCity"
+            type="text"
+            @keyup.enter="handleSubmit"
+        >
         <button @click="handleSubmit">
             Buscar
         </button>
@@ -9,17 +13,21 @@
 </template>
 
 <script>
+import VueTypes from 'vue-types'
 
 export default {
     name: 'Header',
-    props: ['title'],
+    props: {
+        title: VueTypes.string.def(''),
+    },
     data () {
         return {
+            inputCity: '',
         }
     },
     methods: {
         handleSubmit () {
-            this.$emit('searchingCities')
+            this.$emit('onSearch', this.inputCity)
         },
     },
 }
