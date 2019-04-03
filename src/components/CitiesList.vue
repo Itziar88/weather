@@ -8,7 +8,7 @@
             >
                 <City
                     :name="city.name"
-                    :temp="city.temp"
+                    :temp="city.temp.toFixed(2)"
                     :state="city.state"
                     :stateAbbr="city.stateAbbr"
                 />

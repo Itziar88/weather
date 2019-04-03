@@ -4,10 +4,12 @@
             :title="title"
             @onSearch="handleSearch"
         />
+        <FilterCities
+            :cities="cities"
+        />
         <CitiesList
             :cities="cities"
         />
-        <!-- <Pruebas /> -->
     </div>
 </template>
 
@@ -15,15 +17,15 @@
 import axios from 'axios'
 
 import Header from './components/Header.vue'
+import FilterCities from './components/FilterCities.vue'
 import CitiesList from './components/CitiesList.vue'
-import Pruebas from './components/Pruebas.vue'
 
 export default {
     name: 'App',
     components: {
         Header,
+        FilterCities,
         CitiesList,
-        Pruebas,
     },
     data () {
         return {
