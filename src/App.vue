@@ -8,9 +8,6 @@
             :cities="cities"
         />
         <!-- <Pruebas /> -->
-        <h4>
-            {{ media }}
-        </h4>
     </div>
 </template>
 
@@ -32,13 +29,7 @@ export default {
         return {
             title: 'API MetaWeather',
             cities: [],
-            inputValue: 'lon',
         }
-    },
-    computed: {
-        media () {
-            return this.cities.length > 0 ? this.cities.reduce((acc, city) => acc + city.temp, 0) / this.cities.length : 'No hay media'
-        },
     },
     methods: {
         async handleSearch (value) {
