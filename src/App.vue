@@ -8,9 +8,9 @@
             :cities="cities"
         />
         <!-- <Pruebas /> -->
-        <button @click="media">
-            media
-        </button>
+        <h4>
+            {{ media }}
+        </h4>
     </div>
 </template>
 
@@ -35,6 +35,11 @@ export default {
             inputValue: 'lon',
         }
     },
+    computed: {
+        media () {
+            return this.cities.length > 0 ? this.cities.reduce((acc, city) => acc + city.temp, 0) / this.cities.length : 'No hay media'
+        },
+    },
     methods: {
         async handleSearch (value) {
             try {
@@ -54,14 +59,6 @@ export default {
                 state: city.consolidated_weather[0].weather_state_name,
                 stateAbbr: city.consolidated_weather[0].weather_state_abbr,
             }
-        },
-        media () {
-            let averageTemp
-            this.cities.forEach((city) => {
-                averageTemp = city.temp
-                console.log(averageTemp)
-            })
-            console.log('ok')
         },
     },
 }
