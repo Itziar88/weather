@@ -71,6 +71,11 @@ export default {
         handleFilters () {
             this.$emit('onFilter', this.filters)
         },
+        reset () {
+            this.filters = { state: 'default', tempMin: null, tempMax: null }
+            return this.filters
+        },
+
     },
 }
 </script>

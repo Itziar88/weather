@@ -4,11 +4,13 @@
             :title="title"
             @onSearch="handleSearch"
         />
-        <FilterCities
+        <FilterCities2
+            ref="filters"
             :cities="cities"
+            @onFilter="handleFilters"
         />
         <CitiesList
-            :cities="cities"
+            :cities="filteredCities"
         />
     </div>
 </template>
@@ -17,24 +19,26 @@
 import axios from 'axios'
 
 import Header from './components/Header.vue'
-import FilterCities from './components/FilterCities.vue'
+import FilterCities2 from './components/FilterCities2.vue'
 import CitiesList from './components/CitiesList.vue'
 
 export default {
     name: 'App',
     components: {
         Header,
-        FilterCities,
+        FilterCities2,
         CitiesList,
     },
     data () {
         return {
             title: 'API MetaWeather',
             cities: [],
+            filteredCities: [],
         }
     },
     methods: {
         async handleSearch (value) {
+            this.$refs.filters.reset()
             try {
                 const response = await axios.get(`/location/search/?query=${value}`)
                 const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
@@ -43,6 +47,7 @@ export default {
             } catch (error) {
                 console.error(error)
             }
+            this.filteredCities = this.cities
         },
         transformCity (city) {
             return {
@@ -52,6 +57,12 @@ export default {
                 state: city.consolidated_weather[0].weather_state_name,
                 stateAbbr: city.consolidated_weather[0].weather_state_abbr,
             }
+        },
+        handleFilters (filters) {
+            this.filteredCities = this.cities.filter(city => (
+                (!filters.tempMin || city.temp >= filters.tempMin) &&
+                (!filters.tempMax || city.temp < filters.tempMax) &&
+                (filters.state === 'default' || city.state === filters.state)))
         },
     },
 }
