@@ -1,32 +1,49 @@
 <template>
-    <div id="app">
-        <Header
-            :title="title"
-            @onSearch="handleSearch"
-        />
-        <FilterCities2
-            ref="filters"
-            :cities="cities"
-            @onFilter="handleFilters"
-        />
-        <CitiesList
-            :cities="filteredCities"
-        />
-    </div>
+    <b-container
+        id="app"
+    >
+        <b-row alignH="center">
+            <Header
+                :title="title"
+                class="header"
+                @onSearch="handleSearch"
+            />
+        </b-row>
+        <b-row>
+            <b-col
+                md="6"
+                class="filteredCities"
+            >
+                <FilterCities3
+                    ref="filters"
+                    :cities="cities"
+                    @onFilter="handleFilters"
+                />
+            </b-col>
+            <b-col
+                md="6"
+                class="listedCities"
+            >
+                <CitiesList
+                    :cities="filteredCities"
+                />
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
 import axios from 'axios'
 
 import Header from './components/Header.vue'
-import FilterCities2 from './components/FilterCities2.vue'
+import FilterCities3 from './components/FilterCities3.vue'
 import CitiesList from './components/CitiesList.vue'
 
 export default {
     name: 'App',
     components: {
         Header,
-        FilterCities2,
+        FilterCities3,
         CitiesList,
     },
     data () {
@@ -76,5 +93,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.header, .filteredCities, .listedCities {
+    box-sizing: border-box;
+    margin: 20px auto;
+
 }
 </style>

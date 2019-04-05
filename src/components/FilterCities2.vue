@@ -42,7 +42,7 @@ import VueTypes from 'vue-types'
 import { uniq } from 'lodash'
 
 export default {
-    name: 'FilterCities',
+    name: 'FilterCities2',
     props: {
         cities: VueTypes.arrayOf(VueTypes.shape({
             id: VueTypes.number.isRequired,

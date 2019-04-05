@@ -1,5 +1,18 @@
 <template>
-    <div class="hello">
+    <div>
+        <b-card-group>
+            <b-card
+                class="imgState"
+                :imgSrc="imgSvg"
+                :imgAlt="state"
+                imgBottom
+            >
+                <b-card-text>
+                    <p> {{ name }}</p>
+                    <p> {{ temp }}</p>
+                </b-card-text>
+            </b-card>
+        </b-card-group>
         <div class="city">
             <p> {{ name }}</p>
             <p> {{ temp }}</p>

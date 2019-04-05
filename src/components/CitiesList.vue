@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div>
         <div v-if="cities.length">
             <p>Temperatura media: {{ media }}</p>
             <div

@@ -1,14 +1,18 @@
 <template>
-    <div class="hello">
+    <div>
         <h1>{{ title }}</h1>
-        <input
-            v-model="inputCity"
-            type="text"
-            @keyup.enter="handleSubmit"
-        >
-        <button @click="handleSubmit">
-            Buscar
-        </button>
+        <b-input-group>
+            <b-form-input
+                v-model="inputCity"
+                type="text"
+                @keyup.enter="handleSubmit"
+            />
+            <b-input-group-append>
+                <b-button @click="handleSubmit">
+                    Buscar
+                </b-button>
+            </b-input-group-append>
+        </b-input-group>
     </div>
 </template>
 
