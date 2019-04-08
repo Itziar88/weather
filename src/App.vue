@@ -26,6 +26,7 @@
             >
                 <CitiesList
                     :cities="filteredCities"
+                    :loading="loading"
                 />
             </b-col>
         </b-row>
@@ -51,6 +52,7 @@ export default {
             title: 'API MetaWeather',
             cities: [],
             filteredCities: [],
+            loading: false,
         }
     },
     methods: {
@@ -60,6 +62,7 @@ export default {
             } else {
                 this.$refs.filters.reset()
                 try {
+                    this.loading = true
                     const response = await axios.get(`/location/search/?query=${value}`)
                     const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
                     const responseCities = await Promise.all(getCitiesData)
@@ -68,6 +71,7 @@ export default {
                     console.error(error)
                 }
                 this.filteredCities = this.cities
+                this.loading = false
             }
         },
         transformCity (city) {

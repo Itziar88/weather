@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div v-if="loading">
+            <b-spinner
+                variant="info"
+            />
+        </div>
         <div v-if="cities.length">
             <p>Temperatura media: {{ media }}</p>
             <div
@@ -14,7 +19,7 @@
                 />
             </div>
         </div>
-        <p v-else>
+        <p v-else-if="!loading">
             No hay ciudades seleccionadas
         </p>
     </div>
@@ -37,6 +42,7 @@ export default {
             state: VueTypes.string.def(''),
             stateAbbr: VueTypes.string.def(''),
         })).def([]),
+        loading: VueTypes.bool.def(false),
     },
     computed: {
         media () {
