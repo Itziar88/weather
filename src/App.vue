@@ -55,16 +55,20 @@ export default {
     },
     methods: {
         async handleSearch (value) {
-            this.$refs.filters.reset()
-            try {
-                const response = await axios.get(`/location/search/?query=${value}`)
-                const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
-                const responseCities = await Promise.all(getCitiesData)
-                this.cities = responseCities.map(responseCity => this.transformCity(responseCity.data))
-            } catch (error) {
-                console.error(error)
+            if (value === '') {
+                this.filteredCities = []
+            } else {
+                this.$refs.filters.reset()
+                try {
+                    const response = await axios.get(`/location/search/?query=${value}`)
+                    const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
+                    const responseCities = await Promise.all(getCitiesData)
+                    this.cities = responseCities.map(responseCity => this.transformCity(responseCity.data))
+                } catch (error) {
+                    console.error(error)
+                }
+                this.filteredCities = this.cities
             }
-            this.filteredCities = this.cities
         },
         transformCity (city) {
             return {
