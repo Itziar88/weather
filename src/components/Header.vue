@@ -5,7 +5,7 @@
             <b-form-input
                 v-model="inputCity"
                 type="text"
-                @keyup.enter="handleSubmit"
+                @keyup="handleSubmit"
             />
             <b-input-group-append>
                 <b-button @click="handleSubmit">
@@ -18,6 +18,7 @@
 
 <script>
 import VueTypes from 'vue-types'
+import { debounce } from 'lodash'
 
 export default {
     name: 'Header',
@@ -30,9 +31,9 @@ export default {
         }
     },
     methods: {
-        handleSubmit () {
+        handleSubmit: debounce(function submitDebounced () {
             this.$emit('onSearch', this.inputCity)
-        },
+        }, 1000),
     },
 }
 </script>
