@@ -1,9 +1,16 @@
 <template>
     <div>
-        <b-spinner
+        <b-button
             v-if="loading"
             variant="info"
-        />
+            disabled
+        >
+            <b-spinner
+                small
+                type="grow"
+            />
+            <span> Buscando...</span>
+        </b-button>
         <template v-if="cities.length">
             <p>Temperatura media: {{ media }}</p>
             <City

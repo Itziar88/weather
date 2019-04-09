@@ -14,9 +14,10 @@
                 md="6"
                 class="filteredCities"
             >
-                <FilterCities3
+                <FilterCities
                     ref="filters"
                     :cities="cities"
+                    :disabledFormStatus="disabledFormStatus"
                     @onFilter="handleFilters"
                 />
             </b-col>
@@ -37,14 +38,14 @@
 import axios from 'axios'
 
 import Header from './components/Header.vue'
-import FilterCities3 from './components/FilterCities3.vue'
+import FilterCities from './components/FilterCities.vue'
 import CitiesList from './components/CitiesList.vue'
 
 export default {
     name: 'App',
     components: {
         Header,
-        FilterCities3,
+        FilterCities,
         CitiesList,
     },
     data () {
@@ -53,16 +54,20 @@ export default {
             cities: [],
             filteredCities: [],
             loading: false,
+            disabledFormStatus: true,
         }
     },
     methods: {
         async handleSearch (value) {
             if (value === '') {
                 this.filteredCities = []
+                this.disabledFormStatus = true
             } else {
                 this.$refs.filters.reset()
                 try {
                     this.loading = true
+                    this.filteredCities = []
+                    this.disabledFormStatus = true
                     const response = await axios.get(`/location/search/?query=${value}`)
                     const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
                     const responseCities = await Promise.all(getCitiesData)
@@ -70,7 +75,13 @@ export default {
                 } catch (error) {
                     console.error(error)
                 }
-                this.filteredCities = this.cities
+                if (this.cities.length !== 0) {
+                    this.filteredCities = this.cities
+                    this.disabledFormStatus = false
+                } else {
+                    this.filteredCities = []
+                    this.disabledFormStatus = true
+                }
                 this.loading = false
             }
         },

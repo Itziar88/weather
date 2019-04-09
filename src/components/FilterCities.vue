@@ -1,39 +1,50 @@
 <template>
-    <div class="hello">
-        <h2>FilterCities</h2>
-        <form>
-            <label>Temperatura mínima:</label>
-            <input
-                v-model="filters.tempMin"
-                type="text"
-                @keyup="handleFilters"
+    <div>
+        <b-form-fieldset :disabled="disabledFormStatus">
+            <b-form-group
+                labelColsMd="4"
+                label="Temperatura mínima: "
             >
-            <label>Temperatura máxima:</label>
-            <input
-                v-model="filters.tempMax"
-                type="text"
-                @keyup="handleFilters"
+                <b-form-input
+                    v-model="filters.tempMin"
+                    type="text"
+                    @keyup="handleFilters"
+                />
+            </b-form-group>
+            <b-form-group
+                labelColsMd="4"
+                label="Temperatura máxima: "
             >
-            <label>Estado del tiempo: </label>
-            <select
-                v-model="filters.state"
-                @change="handleFilters"
+                <b-form-input
+                    v-model="filters.tempMax"
+                    type="text"
+                    @keyup="handleFilters"
+                />
+            </b-form-group>
+            <b-form-group
+                labelColsMd="4"
+                label="Estado del tiempo: "
             >
-                <option
-                    default
-                    value="default"
+                <b-form-select
+                    v-model="filters.state"
+                    @change="handleFilters"
                 >
-                    Selecciona un tiempo
-                </option>
-                <option
-                    v-for="uniqState in stateOptions"
-                    :key="uniqState.id"
-                    :value="uniqState"
-                >
-                    {{ uniqState }}
-                </option>
-            </select>
-        </form>
+                    <option
+                        default
+                        value="default"
+                    >
+                        Selecciona un tiempo
+                    </option>
+                    <option
+                        v-for="uniqState in stateOptions"
+                        :key="uniqState.id"
+                        :value="uniqState"
+                    >
+                        {{ uniqState }}
+                    </option>
+                </b-form-select>
+            </b-form-group>
+        </b-form-fieldset>
     </div>
 </template>
 
@@ -51,6 +62,7 @@ export default {
             state: VueTypes.string.def(''),
             stateAbbr: VueTypes.string.def(''),
         })).def([]),
+        disabledFormStatus: VueTypes.bool.def(true),
     },
     data () {
         return {
@@ -70,6 +82,10 @@ export default {
     methods: {
         handleFilters () {
             this.$emit('onFilter', this.filters)
+        },
+        reset () {
+            this.filters = { state: 'default', tempMin: null, tempMax: null }
+            return this.filters
         },
     },
 }
