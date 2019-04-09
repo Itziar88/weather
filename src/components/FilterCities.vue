@@ -2,8 +2,10 @@
     <div>
         <b-form-fieldset :disabled="disabledFormStatus">
             <b-form-group
-                labelColsMd="4"
+                labelColsMd="5"
                 label="Temperatura mínima: "
+                labelAlign="right"
+                labelSize="lg"
             >
                 <b-form-input
                     v-model="filters.tempMin"
@@ -12,8 +14,10 @@
                 />
             </b-form-group>
             <b-form-group
-                labelColsMd="4"
+                labelColsMd="5"
                 label="Temperatura máxima: "
+                labelAlign="right"
+                labelSize="lg"
             >
                 <b-form-input
                     v-model="filters.tempMax"
@@ -22,8 +26,10 @@
                 />
             </b-form-group>
             <b-form-group
-                labelColsMd="4"
+                labelColsMd="5"
                 label="Estado del tiempo: "
+                labelAlign="right"
+                labelSize="lg"
             >
                 <b-form-select
                     v-model="filters.state"

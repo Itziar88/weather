@@ -11,8 +11,10 @@
             />
             <span> Buscando...</span>
         </b-button>
-        <template v-if="cities.length">
-            <p>Temperatura media: {{ media }}</p>
+        <template
+            v-if="cities.length"
+        >
+            <h5><strong>Temperatura media:</strong> {{ media }} ºC</h5>
             <City
                 v-for="city in cities"
                 :key="city.id"

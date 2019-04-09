@@ -4,14 +4,9 @@
         :imgSrc="imgSvg"
         :imgAlt="state"
         imgBottom
-    >
-        <b-card-text>
-            <p> {{ name }}</p>
-            <p class="mb-0">
-                {{ temp.toFixed(2) }}
-            </p>
-        </b-card-text>
-    </b-card>
+        :title="name"
+        :subTitle="temp.toFixed(2) + ' ºC'"
+    />
 </template>
 
 <script>
@@ -36,7 +31,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .City {
-    margin: 25px;
+    margin: 10px;
+    padding: 0.5rem;
     img {
         width: 15%;
         margin: 0 auto 10px;

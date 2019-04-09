@@ -8,7 +8,10 @@
                 @keyup="handleSubmit"
             />
             <b-input-group-append>
-                <b-button @click="handleSubmit">
+                <b-button
+                    variant="info"
+                    @click="handleSubmit"
+                >
                     Buscar
                 </b-button>
             </b-input-group-append>
