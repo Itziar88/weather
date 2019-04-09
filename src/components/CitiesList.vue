@@ -1,24 +1,20 @@
 <template>
     <div>
-        <div v-if="loading">
-            <b-spinner
-                variant="info"
-            />
-        </div>
-        <div v-if="cities.length">
+        <b-spinner
+            v-if="loading"
+            variant="info"
+        />
+        <template v-if="cities.length">
             <p>Temperatura media: {{ media }}</p>
-            <div
+            <City
                 v-for="city in cities"
                 :key="city.id"
-            >
-                <City
-                    :name="city.name"
-                    :temp="city.temp.toFixed(2)"
-                    :state="city.state"
-                    :stateAbbr="city.stateAbbr"
-                />
-            </div>
-        </div>
+                :name="city.name"
+                :temp="city.temp"
+                :state="city.state"
+                :stateAbbr="city.stateAbbr"
+            />
+        </template>
         <p v-else-if="!loading">
             No hay ciudades seleccionadas
         </p>

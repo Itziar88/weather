@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div>
         <b-form>
             <b-form-group
                 labelColsMd="4"
@@ -23,7 +23,7 @@
             </b-form-group>
             <b-form-group
                 labelColsMd="4"
-                label="Estado del tiempo : "
+                label="Estado del tiempo: "
             >
                 <b-form-select
                     v-model="filters.state"
@@ -86,7 +86,6 @@ export default {
             this.filters = { state: 'default', tempMin: null, tempMax: null }
             return this.filters
         },
-
     },
 }
 </script>

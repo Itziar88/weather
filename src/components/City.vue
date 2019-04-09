@@ -1,28 +1,17 @@
 <template>
-    <div>
-        <b-card-group>
-            <b-card
-                class="imgState"
-                :imgSrc="imgSvg"
-                :imgAlt="state"
-                imgBottom
-            >
-                <b-card-text>
-                    <p> {{ name }}</p>
-                    <p> {{ temp }}</p>
-                </b-card-text>
-            </b-card>
-        </b-card-group>
-        <div class="city">
+    <b-card
+        class="City"
+        :imgSrc="imgSvg"
+        :imgAlt="state"
+        imgBottom
+    >
+        <b-card-text>
             <p> {{ name }}</p>
-            <p> {{ temp }}</p>
-            <img
-                class="imgState"
-                :src="imgSvg"
-                :alt="state"
-            >
-        </div>
-    </div>
+            <p class="mb-0">
+                {{ temp.toFixed(2) }}
+            </p>
+        </b-card-text>
+    </b-card>
 </template>
 
 <script>
@@ -46,12 +35,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.city{
-  margin: 10px;
-  background-color: bisque;
-}
-.imgState{
-  height: 25px;
-  width: 25px;
+.City {
+    margin: 25px;
+    img {
+        width: 15%;
+        margin: 0 auto 10px;
+    }
 }
 </style>
