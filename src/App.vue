@@ -37,9 +37,7 @@
 <script>
 import axios from 'axios'
 
-import Header from './components/Header.vue'
-import FilterCities from './components/FilterCities.vue'
-import CitiesList from './components/CitiesList.vue'
+import { Header, FilterCities, CitiesList } from '@/components'
 
 export default {
     name: 'App',
@@ -60,29 +58,30 @@ export default {
     methods: {
         async handleSearch (value) {
             if (value === '') {
+                this.cities = []
                 this.filteredCities = []
                 this.disabledFormStatus = true
             } else {
-                this.$refs.filters.reset()
                 try {
+                    this.$refs.filters.reset()
                     this.loading = true
                     this.filteredCities = []
+                    this.cities = []
                     this.disabledFormStatus = true
                     const response = await axios.get(`/location/search/?query=${value}`)
                     const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
                     const responseCities = await Promise.all(getCitiesData)
                     this.cities = responseCities.map(responseCity => this.transformCity(responseCity.data))
+                    if (this.cities.length !== 0) {
+                        this.filteredCities = this.cities
+                        this.disabledFormStatus = false
+                    }
+                    this.loading = false
                 } catch (error) {
+                    this.loading = false
+                    this.disabledFormStatus = false
                     console.error(error)
                 }
-                if (this.cities.length !== 0) {
-                    this.filteredCities = this.cities
-                    this.disabledFormStatus = false
-                } else {
-                    this.filteredCities = []
-                    this.disabledFormStatus = true
-                }
-                this.loading = false
             }
         },
         transformCity (city) {

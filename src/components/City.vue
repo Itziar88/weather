@@ -5,7 +5,7 @@
         :imgAlt="state"
         imgBottom
         :title="name"
-        :subTitle="temp.toFixed(2) + ' ºC'"
+        :subTitle="`${temp.toFixed(2)} ºC`"
     />
 </template>
 
@@ -28,7 +28,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .City {
     margin: 10px;

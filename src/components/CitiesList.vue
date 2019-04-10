@@ -12,7 +12,7 @@
             <span> Buscando...</span>
         </b-button>
         <template
-            v-if="cities.length"
+            v-else-if="cities.length"
         >
             <h5><strong>Temperatura media:</strong> {{ media }} ºC</h5>
             <City
@@ -24,7 +24,7 @@
                 :stateAbbr="city.stateAbbr"
             />
         </template>
-        <p v-else-if="!loading">
+        <p v-else>
             No hay ciudades seleccionadas
         </p>
     </div>
@@ -56,8 +56,3 @@ export default {
     },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-
-</style>
