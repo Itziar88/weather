@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>{{ title }}</h1>
+        <h1>API MetaWeather</h1>
         <b-input-group>
             <b-form-input
                 v-model="inputCity"
@@ -20,14 +20,10 @@
 </template>
 
 <script>
-import VueTypes from 'vue-types'
 import { debounce } from 'lodash'
 
 export default {
     name: 'Header',
-    props: {
-        title: VueTypes.string.def(''),
-    },
     data () {
         return {
             inputCity: '',

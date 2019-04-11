@@ -4,7 +4,6 @@
     >
         <b-row alignH="center">
             <Header
-                :title="title"
                 class="header"
                 @onSearch="handleSearch"
             />
@@ -48,7 +47,6 @@ export default {
     },
     data () {
         return {
-            title: 'API MetaWeather',
             cities: [],
             filteredCities: [],
             loading: false,
