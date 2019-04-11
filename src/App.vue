@@ -5,7 +5,7 @@
         <b-row alignH="center">
             <Header
                 class="header"
-                @onSearch="handleSearch"
+                @onSearch="search"
             />
         </b-row>
         <b-row>
@@ -34,7 +34,10 @@
 </template>
 
 <script>
-import axios from 'axios'
+
+import {
+    mapState, mapGetters, mapActions, mapMutations,
+} from 'vuex'
 
 import { Header, FilterCities, CitiesList } from '@/components'
 
@@ -45,58 +48,18 @@ export default {
         FilterCities,
         CitiesList,
     },
-    data () {
-        return {
-            cities: [],
-            filteredCities: [],
-            loading: false,
-            disabledFormStatus: true,
-        }
+    computed: {
+        ...mapState({
+            loading: state => state.loading,
+        }),
+        ...mapGetters({
+            filteredCities: 'filteredCities',
+        }),
     },
     methods: {
-        async handleSearch (value) {
-            if (value === '') {
-                this.cities = []
-                this.filteredCities = []
-                this.disabledFormStatus = true
-            } else {
-                try {
-                    this.$refs.filters.reset()
-                    this.loading = true
-                    this.filteredCities = []
-                    this.cities = []
-                    this.disabledFormStatus = true
-                    const response = await axios.get(`/location/search/?query=${value}`)
-                    const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
-                    const responseCities = await Promise.all(getCitiesData)
-                    this.cities = responseCities.map(responseCity => this.transformCity(responseCity.data))
-                    if (this.cities.length !== 0) {
-                        this.filteredCities = this.cities
-                        this.disabledFormStatus = false
-                    }
-                    this.loading = false
-                } catch (error) {
-                    this.loading = false
-                    this.disabledFormStatus = false
-                    console.error(error)
-                }
-            }
-        },
-        transformCity (city) {
-            return {
-                id: city.woeid,
-                name: city.title,
-                temp: city.consolidated_weather[0].the_temp,
-                state: city.consolidated_weather[0].weather_state_name,
-                stateAbbr: city.consolidated_weather[0].weather_state_abbr,
-            }
-        },
-        handleFilters (filters) {
-            this.filteredCities = this.cities.filter(city => (
-                (!filters.tempMin || city.temp >= filters.tempMin) &&
-                (!filters.tempMax || city.temp < filters.tempMax) &&
-                (filters.state === 'default' || city.state === filters.state)))
-        },
+        ...mapActions({
+            search: 'search',
+        }),
     },
 }
 </script>

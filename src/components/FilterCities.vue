@@ -1,6 +1,7 @@
 <template>
     <div>
-        <b-form-fieldset :disabled="disabledFormStatus">
+        <!-- <b-form-fieldset :disabled="disabledFormStatus"> -->
+        <b-form-fieldset>
             <b-form-group
                 labelColsMd="5"
                 label="Temperatura mínima: "

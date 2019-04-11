@@ -9,12 +9,8 @@
 // }
 import axios from 'axios'
 
-axios.create({
+const api = axios.create({
     baseURL: 'https://www.metaweather.com/',
-})
-
-const api = new axios({
-
 })
 
 // función para buscar ciudades
