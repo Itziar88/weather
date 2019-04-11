@@ -5,7 +5,6 @@
         <b-row alignH="center">
             <Header
                 class="header"
-                @onSearch="search"
             />
         </b-row>
         <b-row>
@@ -13,31 +12,19 @@
                 md="6"
                 class="filteredCities"
             >
-                <FilterCities
-                    ref="filters"
-                    :cities="cities"
-                    :disabledFormStatus="disabledFormStatus"
-                    @onFilter="handleFilters"
-                />
+                <FilterCities />
             </b-col>
             <b-col
                 md="6"
                 class="listedCities"
             >
-                <CitiesList
-                    :cities="filteredCities"
-                    :loading="loading"
-                />
+                <CitiesList />
             </b-col>
         </b-row>
     </b-container>
 </template>
 
 <script>
-
-import {
-    mapState, mapGetters, mapActions, mapMutations,
-} from 'vuex'
 
 import { Header, FilterCities, CitiesList } from '@/components'
 
@@ -47,19 +34,6 @@ export default {
         Header,
         FilterCities,
         CitiesList,
-    },
-    computed: {
-        ...mapState({
-            loading: state => state.loading,
-        }),
-        ...mapGetters({
-            filteredCities: 'filteredCities',
-        }),
-    },
-    methods: {
-        ...mapActions({
-            search: 'search',
-        }),
     },
 }
 </script>

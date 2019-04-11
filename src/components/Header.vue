@@ -21,6 +21,9 @@
 
 <script>
 import { debounce } from 'lodash'
+import {
+    mapActions,
+} from 'vuex'
 
 export default {
     name: 'Header',
@@ -30,8 +33,11 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            search: 'search',
+        }),
         handleSubmit: debounce(function submitDebounced () {
-            this.$emit('onSearch', this.inputCity)
+            this.search(this.inputCity)
         }, 1000),
     },
 }

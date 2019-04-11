@@ -55,7 +55,7 @@ export default new Vuex.Store({
             state.filters = { ...initialState.filters }
         },
         updateFilter: (state, { key, value }) => {
-            if (state.filters[key]) {
+            if (state.filters[key] !== undefined) {
                 state.filters = { ...state.filters, [key]: value }
             }
         },
