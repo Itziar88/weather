@@ -26,15 +26,19 @@ export default new Vuex.Store({
     state: { ...initialState },
     actions: {
         async search ({ commit }, searchTerm) {
-            commit('cleanFilters')
-            commit('cleanCities')
-            commit('setLoading')
-            const response = await axios.get(`/location/search/?query=${searchTerm}`)
-            const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
-            const responseCities = await Promise.all(getCitiesData)
-            const cities = responseCities.map(responseCity => transformCity(responseCity.data))
-            commit('setCities', cities)
-            commit('unsetLoading')
+            if (searchTerm !== undefined && searchTerm !== '') {
+                commit('cleanFilters')
+                commit('cleanCities')
+                commit('setLoading')
+                const response = await axios.get(`/location/search/?query=${searchTerm}`)
+                const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
+                const responseCities = await Promise.all(getCitiesData)
+                const cities = responseCities.map(responseCity => transformCity(responseCity.data))
+                commit('setCities', cities)
+                commit('unsetLoading')
+            } else {
+                commit('cleanCities')
+            }
         },
     },
     getters: {
