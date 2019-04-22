@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default {
-    request (method, url) {
+    request (method, url, data = null) {
         if (!method) {
             console.error('API function call requires method argument')
             return
@@ -10,7 +10,7 @@ export default {
             console.error('API function call requires uri argument')
             return
         }
-        axios({ method, url })
+        axios({ method, url, data })
     },
 }
 
@@ -23,4 +23,4 @@ export default {
 //         return axios.get(`location/${item.woeid}`)
 //     },
 
-// })
+//  })

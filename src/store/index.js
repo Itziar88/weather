@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 import api from '../api'
 
 Vue.use(Vuex)
@@ -36,8 +37,8 @@ export default new Vuex.Store({
                 // const response = api.searchTerm(searchTerm)
                 // const getCitiesData = response.data.map(item => api.searchIdCity(item))
 
-                const response = api.request('get', `https://www.metaweather.com/api/location/search/?query=${searchTerm}`)
-                console.log('response')
+                const response = await api.request('get', `https://www.metaweather.com/api/location/search/?query=${searchTerm}`)
+                console.log(response)
                 const getCitiesData = response.data.map(item => api.request('get', `https://www.metaweather.com/location/${item.woeid}`))
                 console.log(getCitiesData)
                 const responseCities = await Promise.all(getCitiesData)
