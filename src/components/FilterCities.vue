@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-form-fieldset :disabled="disabledFormStatus">
+        <b-form-fieldset :disabled="disabled">
             <b-form-group
                 labelColsMd="5"
                 label="Temperatura mínima: "
@@ -10,7 +10,6 @@
                 <b-form-input
                     v-model="filters.tempMin"
                     type="text"
-                    @keyup="handleFilters"
                 />
             </b-form-group>
             <b-form-group
@@ -22,7 +21,6 @@
                 <b-form-input
                     v-model="filters.tempMax"
                     type="text"
-                    @keyup="handleFilters"
                 />
             </b-form-group>
             <b-form-group
@@ -32,8 +30,7 @@
                 labelSize="lg"
             >
                 <b-form-select
-                    v-model="filters.state"
-                    @change="handleFilters"
+                    v-model="filters.weatherState"
                 >
                     <option
                         default
@@ -55,44 +52,57 @@
 </template>
 
 <script>
-import VueTypes from 'vue-types'
 import { uniq } from 'lodash'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
     name: 'FilterCities',
-    props: {
-        cities: VueTypes.arrayOf(VueTypes.shape({
-            id: VueTypes.number.isRequired,
-            name: VueTypes.string.isRequired,
-            temp: VueTypes.number.def(0),
-            state: VueTypes.string.def(''),
-            stateAbbr: VueTypes.string.def(''),
-        })).def([]),
-        disabledFormStatus: VueTypes.bool.def(true),
-    },
-    data () {
-        return {
-            filters: {
-                state: 'default',
-                tempMin: null,
-                tempMax: null,
-            },
-        }
-    },
+
     computed: {
+        ...mapState ({
+            loading: state => state.loading,
+            cities: state => state.cities,
+            filters: state => state.filters
+        }),
         stateOptions () {
             const uniqCities = uniq(this.cities.map(city => city.state))
             return uniqCities
         },
+        disabled () {
+            if(this.loading === true || this.cities.length === 0){
+                return true
+            }
+            return false
+        },
+        tempMin: {
+            get() {
+                return this.filters.tempMin
+            },
+            set (value) {
+                this.updateFilter ({ key: 'tempMin', value })
+            }
+        },
+        tempMax: {
+            get() {
+                return this.filters.tempMax
+            },
+            set (value) {
+                this.updateFilter ({ key: 'tempMax', value })
+            }
+        },
+        weatherState: {
+            get() {
+                return this.filters.weatherState
+            },
+            set (value) {
+                this.updateFilter ({ key: 'weatherState', value })
+            }
+        }
     },
     methods: {
-        handleFilters () {
-            this.$emit('onFilter', this.filters)
-        },
-        reset () {
-            this.filters = { state: 'default', tempMin: null, tempMax: null }
-            return this.filters
-        },
+        ...mapMutations({
+            updateFilter: 'updateFilter'
+        })
     },
 }
 </script>
