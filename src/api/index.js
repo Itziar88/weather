@@ -7,10 +7,11 @@ export default {
             return
         }
         if (!url) {
-            console.error('API function call requires uri argument')
+            console.error('API function call requires url argument')
             return
         }
-        axios({ method, url, data })
+        // eslint-disable-next-line consistent-return
+        return axios({ method, url, data })
     },
 }
 

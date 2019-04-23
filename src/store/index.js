@@ -31,16 +31,8 @@ export default new Vuex.Store({
                 commit('cleanFilters')
                 commit('cleanCities')
                 commit('setLoading')
-                // const response = await axios.get(`/location/search/?query=${searchTerm}`)
-                // const getCitiesData = response.data.map(item => axios.get(`location/${item.woeid}`))
-
-                // const response = api.searchTerm(searchTerm)
-                // const getCitiesData = response.data.map(item => api.searchIdCity(item))
-
                 const response = await api.request('get', `https://www.metaweather.com/api/location/search/?query=${searchTerm}`)
-                console.log(response)
-                const getCitiesData = response.data.map(item => api.request('get', `https://www.metaweather.com/location/${item.woeid}`))
-                console.log(getCitiesData)
+                const getCitiesData = response.data.map(item => api.request('get', `https://www.metaweather.com/api/location/${item.woeid}`))
                 const responseCities = await Promise.all(getCitiesData)
                 const cities = responseCities.map(responseCity => transformCity(responseCity.data))
                 commit('setCities', cities)
